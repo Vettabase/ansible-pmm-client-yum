@@ -1,0 +1,14 @@
+galaxy_info:
+  author: Federico Razzoli
+  description: Ansible role to manage PMM Client on RHEL.
+  company: Vettabase
+  license: BSD-3-Clause
+  min_ansible_version: 2.9
+  platforms:
+    - name: Red Hat Enterprise Linux Server
+      versions:
+      - 7.9
+
+  galaxy_tags: [pmm, pmm-client, mariadb-monitoring, mysql-monitoring]
+
+dependencies: []
