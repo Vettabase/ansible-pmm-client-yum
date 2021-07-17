@@ -1,0 +1,32 @@
+---
+
+- name: Validate PMM host
+  assert:
+    that: pmm_host | length > 0
+    fail_msg: pmm_host is missing
+
+- name: Validate PMM user
+  assert:
+    that: pmm_user | length > 0
+    fail_msg: pmm_user is missing
+
+- name: Validate PMM password
+  assert:
+    that: pmm_password | length > 0
+    fail_msg: pmm_password is missing
+
+- name: Validate pmm_client_monitoring_mode
+  assert:
+    that: >
+      pmm_client_monitoring_mode == 'push' or
+      pmm_client_monitoring_mode == 'pull' or
+      pmm_client_monitoring_mode == 'auto'
+    fail_msg: pmm_client_monitoring_mode is missing
+
+- name: Validate pmm_client_query_source
+  assert:
+    that: >
+      pmm_client_query_source == 'none'       or
+      pmm_client_query_source == 'slowlog'    or
+      pmm_client_query_source == 'perfschema'
+    fail_msg: pmm_client_query_source is missing

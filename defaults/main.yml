@@ -1,0 +1,8 @@
+---
+
+percona_release_version:
+
+pmm_client_version: 'latest'
+pmm_port: '443'
+pmm_client_query_source: 'none'
+pmm_client_monitoring_mode: 'push'

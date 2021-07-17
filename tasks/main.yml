@@ -1,0 +1,34 @@
+---
+
+- name: Include validate.yml
+  tags: [ pmm, pmm-client, validate, pmm-client-validate ]
+  include: validate.yml
+
+- name: Add Percona official RPM repository
+  tags: [ pmm, pmm-client, percona-release-upgrade ]
+  yum:
+    name: "https://repo.percona.com/yum/percona-release-{{ percona_release_version }}.noarch.rpm"
+    allow_downgrade: yes
+    state: present
+
+- name: Upgrade yum cache
+  tags: [ pmm, pmm-client, pmm-client-upgrade ]
+  yum:
+    update_cache: yes
+
+- name: Install pmm2-client
+  tags: [ pmm, pmm-client, pmm-client-upgrade ]
+  yum:
+    name: "pmm2-client-{{ pmm_client_version }}"
+    allow_downgrade: yes
+    state: present
+
+- name: Configure pmm2-client
+  tags: [ pmm, pmm-client, pmm-client-upgrade ]
+  command: >
+    "pmm-admin config --server-url=https://{{ pmm_user | urlencode }}:{{ pmm_password | urlencode }}@{{ pmm_host | urlencode }}:{{ pmm_port }} --server-insecure-tls --force"
+
+- name: Add MySQL service without query analytics
+  tags: [ pmm, pmm-client, pmm-client-upgrade ]
+  command: >
+    "pmm-admin add mysql --username={{ pmm_user | urlencode }} --password={{ pmm_password | urlencode }} --metrics-mode={{ pmm_client_monitoring_mode }} --query-source={{ pmm_client_query_source }} --environment={{ environment }} --cluster={{ cluster_name }} --replication-set={{ replication_set_name }}"
