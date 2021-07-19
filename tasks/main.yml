@@ -6,21 +6,21 @@
 
 - name: Create directory for monitoring scripts
   file:
-    path: /opt/monitor-directory
+    path: "{{ monitoring_scripts_dir }}"
     mode: '0775'
     state: directory
 
 - name: Add stored procedures SQL files
   template:
     src: ./templates/*
-    dest: /opt/monitor
+    dest:  "{{ monitoring_scripts_dir }}"
     mode: '0775'
     state: present
 
 - name: Add PMM client account in MariaDB
   tags: [ pmm, pmm-client ]
   shell: >
-    mysql < /opt/monitor/pmm_client_setup.sql
+    mysql <  "{{ monitoring_scripts_dir }}/pmm_client_setup.sql"
 
 - name: Add Percona official RPM repository
   tags: [ pmm, pmm-client, percona-release-upgrade ]

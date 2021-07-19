@@ -1,6 +1,7 @@
 ---
 
 percona_release_version:
+monitoring_scripts_dir: '/opt/monitor'
 
 pmm_client_version: 'latest'
 pmm_port: '443'
