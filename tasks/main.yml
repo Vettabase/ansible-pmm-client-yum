@@ -31,4 +31,4 @@
 - name: Add MySQL service without query analytics
   tags: [ pmm, pmm-client, pmm-client-upgrade ]
   command: >
-    "pmm-admin add mysql --username={{ pmm_user | urlencode }} --password={{ pmm_password | urlencode }} --metrics-mode={{ pmm_client_monitoring_mode }} --query-source={{ pmm_client_query_source }} --environment={{ environment }} --cluster={{ cluster_name }} --replication-set={{ replication_set_name }}"
+    "pmm-admin add mysql --username={{ pmm_client_username }} --password={{ pmm_client_password }} --metrics-mode={{ pmm_client_monitoring_mode }} --query-source={{ pmm_client_query_source }} --environment={{ environment }} --cluster={{ cluster_name }} --replication-set={{ replication_set_name }}"

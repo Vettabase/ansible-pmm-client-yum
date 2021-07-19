@@ -22,6 +22,8 @@ These variables should be shared between this role and PMM Server role. Specify 
 Role variables.
 
 - `pmm_client_version`: Version of the pmm2-client to install. Upgrade or downgrade may be done when the role is applied. Default: 'latest'.
+- `pmm_client_username`: MariaDB username used by PMM agent.
+- `pmm_client_password`: MariaDB password used by PMM agent.
 - `pmm_client_query_source`: 'slowlog', 'perfschema', 'none'. Recommended: 'slowlog'. Default: 'none'.
 - `pmm_client_monitoring_mode`: 'push', 'pull', 'auto'. Default: 'push'.
 
