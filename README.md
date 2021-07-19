@@ -51,6 +51,7 @@ Normal operations:
 
 - `pmm`: Run this role and other PMM client & server roles that use this tag.
 - `pmm-client`: Run this role and other PMM client roles that use this tag.
+- `pmm-client-configure`: Reconfigure client and recreates services.
 - `monitor-scripts-upgrade`: Add monitor-related scripts.
 
 Validation (use these tags after making changes):

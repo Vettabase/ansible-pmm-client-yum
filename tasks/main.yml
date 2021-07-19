@@ -49,17 +49,17 @@
     state: present
 
 - name: Configure pmm2-client
-  tags: [ pmm, pmm-client, pmm-client-upgrade ]
+  tags: [ pmm, pmm-client, pmm-client-configure, pmm-client-upgrade ]
   command: >
     "pmm-admin config --server-url=https://{{ pmm_user | urlencode }}:{{ pmm_password | urlencode }}@{{ pmm_host | urlencode }}:{{ pmm_port }} --server-insecure-tls --force"
 
 - name: Remove MySQL service if present
-  tags: [ pmm, pmm-client ]
+  tags: [ pmm, pmm-client, pmm-client-configure ]
   command: >
     "pmm-admin remove mysql"
   ignore_error: yes
 
 - name: Add MySQL service without query analytics
-  tags: [ pmm, pmm-client, pmm-client-upgrade ]
+  tags: [ pmm, pmm-client, pmm-client-configure, pmm-client-upgrade ]
   command: >
     "pmm-admin add mysql --username={{ pmm_client_username }} --password={{ pmm_client_password }} --metrics-mode={{ pmm_client_monitoring_mode }} --query-source={{ pmm_client_query_source }} --environment={{ environment }} --cluster={{ cluster_name }} --replication-set={{ replication_set_name }}"
