@@ -5,13 +5,14 @@
   include: validate.yml
 
 - name: Create directory for monitoring scripts
-tags: [ pmm, pmm-client ]
+  tags: [ pmm, pmm-client, monitor-scripts-upgrade ]
   file:
     path: "{{ monitoring_scripts_dir }}"
     mode: '0775'
     state: directory
 
 - name: Add PMM stored procedures SQL files
+  tags: [ pmm, pmm-client, monitor-scripts-upgrade ]
   template:
     src: ./templates/*
     dest:  "{{ monitoring_scripts_dir }}"
@@ -19,12 +20,12 @@ tags: [ pmm, pmm-client ]
     state: present
 
 - name: Create PMM setup stored procedures in MariaDB
-  tags: [ pmm, pmm-client ]
+  tags: [ pmm, pmm-client, monitor-scripts-upgrade ]
   shell: >
     mysql <  -u"{{ mariadb_user }}" -p"{{ mariadb_password }}" "{{ monitoring_scripts_dir }}"/pmm_client_setup.sql
 
 - name: Call vettabase.create_pmm_user()
-  tags: [ pmm, pmm-client ]
+  tags: [ pmm, pmm-client, monitor-scripts-upgrade ]
   shell: >
     "mysql -u{{ mariadb_user }} -p{{ mariadb_password }} -e 'CALL vettabase.create_pmm_user({{ pmm_client_username }}, {{ pmm_host }}, {{ pmm_client_password }})'"
 
