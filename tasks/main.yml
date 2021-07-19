@@ -4,6 +4,24 @@
   tags: [ pmm, pmm-client, validate, pmm-client-validate ]
   include: validate.yml
 
+- name: Create directory for monitoring scripts
+  file:
+    path: /opt/monitor-directory
+    mode: '0775'
+    state: directory
+
+- name: Add stored procedures SQL files
+  template:
+    src: ./templates/*
+    dest: /opt/monitor
+    mode: '0775'
+    state: present
+
+- name: Add PMM client account in MariaDB
+  tags: [ pmm, pmm-client ]
+  shell: >
+    mysql < /opt/monitor/pmm_client_setup.sql
+
 - name: Add Percona official RPM repository
   tags: [ pmm, pmm-client, percona-release-upgrade ]
   yum:
