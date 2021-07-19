@@ -33,6 +33,7 @@ These variables have defaults in `defaults/main.yml`. Make sure to override defa
 - `pmm_client_password`: MariaDB password used by PMM agent.
 - `pmm_client_query_source`: 'slowlog', 'perfschema', 'none'. Recommended: 'slowlog'. Default: 'none'.
 - `pmm_client_monitoring_mode`: 'push', 'pull', 'auto'. Default: 'push'.
+- `stored_procedures_test`: Run stored procedures tests. Use after making changes to the stored procedures, or upgrading MariaDB, or changing relevant parts of its configuration.
 
 
 ### Group or host level

@@ -24,6 +24,12 @@
   shell: >
     mysql <  -u"{{ mariadb_user }}" -p"{{ mariadb_password }}" "{{ monitoring_scripts_dir }}"/pmm_client_setup.sql
 
+- name: Test PMM setup stored procedures in MariaDB
+  tags: [ pmm, pmm-client, monitor-scripts-upgrade ]
+  shell: >
+    mysql <  -u"{{ mariadb_user }}" -p"{{ mariadb_password }}" "{{ monitoring_scripts_dir }}"/test_pmm_client_setup.sql
+  when: stored_procedures_test == '1'
+
 - name: Call vettabase.create_pmm_user()
   tags: [ pmm, pmm-client, monitor-scripts-upgrade ]
   shell: >
