@@ -53,6 +53,12 @@
   command: >
     "pmm-admin config --server-url=https://{{ pmm_user | urlencode }}:{{ pmm_password | urlencode }}@{{ pmm_host | urlencode }}:{{ pmm_port }} --server-insecure-tls --force"
 
+- name: Remove MySQL service if present
+  tags: [ pmm, pmm-client ]
+  command: >
+    "pmm-admin remove mysql"
+  ignore_error: yes
+
 - name: Add MySQL service without query analytics
   tags: [ pmm, pmm-client, pmm-client-upgrade ]
   command: >
