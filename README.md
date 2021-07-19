@@ -38,6 +38,20 @@ These variables should be set at group or host level.
 - `replication_set_name`: This helps categorise each node in the PMM interface.
 
 
+## Tags
+
+Normal operations:
+
+- `pmm`: Run this role and other PMM client & server roles that use this tag.
+- `pmm-client`: Run this role and other PMM client roles that use this tag.
+- `monitor-scripts-upgrade`: Add monitor-related scripts.
+
+Validation (use after making changes):
+
+- `validate`: Validate this role and other roles that use this tag.
+- `pmm-client-validate`: Validate this role.
+
+
 ## Copyright and License
 
 Copyright  2021  Vettabase Ltd
