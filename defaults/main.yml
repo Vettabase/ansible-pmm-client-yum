@@ -3,6 +3,9 @@
 percona_release_version: 'latest'
 monitoring_scripts_dir: '/opt/monitor'
 
+mariadb_user: 'root'
+mariadb_password: 'secret'
+
 pmm_client_version: 'latest'
 pmm_port: '443'
 pmm_client_username: 'pmm-client'
