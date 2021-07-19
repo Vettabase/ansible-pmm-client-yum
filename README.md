@@ -10,7 +10,9 @@ Red Hat Enterprise Linux Server release 7.9 (Maipo).
 Ansible version: 2.9.
 
 
-## Configuration
+## Variables
+
+### Global variables
 
 These variables should be shared between this role and PMM Server role. Specify them at group or host level.
 
@@ -19,7 +21,10 @@ These variables should be shared between this role and PMM Server role. Specify 
 - `pmm_user`: PMM user.
 - `pmm_password`: PMM password.
 
-Role variables.
+### Role variables
+
+These variables have defaults in `defaults/main.yml`. Make sure to override defaults as appropriate.
+
 
 - `mariadb_user`: User that runs MariaDB queries.
 - `mariadb_password`: Password for MariaDB user.
@@ -30,7 +35,9 @@ Role variables.
 - `pmm_client_monitoring_mode`: 'push', 'pull', 'auto'. Default: 'push'.
 
 
-These variables should be set at group or host level.
+### Group or host level
+
+These variables are meant to be to set at group or host level, as each host or group may be configured differently.
 
 - `percona_release_version`: Version of percona-release to install. Upgrade or downgrade may be done when the role is applied. You may use other Percona software (like Percona Toolkit or Xtrabackup), so this variable should be available to all roles. Default: 'latest'.
 - `environment`: This helps categorise each node in the PMM interface.
@@ -46,7 +53,7 @@ Normal operations:
 - `pmm-client`: Run this role and other PMM client roles that use this tag.
 - `monitor-scripts-upgrade`: Add monitor-related scripts.
 
-Validation (use after making changes):
+Validation (use these tags after making changes):
 
 - `validate`: Validate this role and other roles that use this tag.
 - `pmm-client-validate`: Validate this role.
