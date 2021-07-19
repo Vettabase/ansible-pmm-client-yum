@@ -1,6 +1,6 @@
 ---
 
-percona_release_version:
+percona_release_version: 'latest'
 monitoring_scripts_dir: '/opt/monitor'
 
 pmm_client_version: 'latest'
