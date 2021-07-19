@@ -5,6 +5,7 @@
   include: validate.yml
 
 - name: Create directory for monitoring scripts
+tags: [ pmm, pmm-client ]
   file:
     path: "{{ monitoring_scripts_dir }}"
     mode: '0775'
