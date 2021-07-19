@@ -25,7 +25,6 @@ These variables should be shared between this role and PMM Server role. Specify 
 
 These variables have defaults in `defaults/main.yml`. Make sure to override defaults as appropriate.
 
-
 - `mariadb_user`: User that runs MariaDB queries.
 - `mariadb_password`: Password for MariaDB user.
 - `pmm_client_version`: Version of the pmm2-client to install. Upgrade or downgrade may be done when the role is applied. Default: 'latest'.
