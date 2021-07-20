@@ -86,7 +86,7 @@ BEGIN
     -- user@host
     DECLARE v_executer_account VARCHAR(64) DEFAULT
         format_account(p_executer_user, p_executer_host);
-    DECLARE v_account_exists DEFAULT
+    DECLARE v_account_exists BOOL DEFAULT
         account_exists(p_executer_user, p_executer_host);
 
     -- Validate input:
