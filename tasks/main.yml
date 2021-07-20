@@ -33,7 +33,7 @@
 - name: Call vettabase.create_pmm_user()
   tags: [ pmm, pmm-client, monitor-scripts-upgrade ]
   shell: >
-    "mysql -u{{ mariadb_user }} -p{{ mariadb_password }} -e 'CALL vettabase.create_pmm_user({{ pmm_client_username }}, {{ pmm_host }}, {{ pmm_client_password }})'"
+    "mysql -u{{ mariadb_user }} -p{{ mariadb_password }} -e 'CALL vettabase.create_pmm_user({{ pmm_client_username }}, {{ pmm_server_host }}, {{ pmm_client_password }})'"
 
 - name: Add Percona official RPM repository
   tags: [ pmm, pmm-client, percona-release-upgrade ]
@@ -57,7 +57,7 @@
 - name: Configure pmm2-client
   tags: [ pmm, pmm-client, pmm-client-configure, pmm-client-upgrade ]
   command: >
-    "pmm-admin config --server-url=https://{{ pmm_user | urlencode }}:{{ pmm_password | urlencode }}@{{ pmm_host | urlencode }}:{{ pmm_port }} --server-insecure-tls --force"
+    "pmm-admin config --server-url=https://{{ pmm_user | urlencode }}:{{ pmm_password | urlencode }}@{{ pmm_server_host | urlencode }}:{{ pmm_server_port }} --server-insecure-tls --force"
 
 - name: Remove MySQL service if present
   tags: [ pmm, pmm-client, pmm-client-configure ]

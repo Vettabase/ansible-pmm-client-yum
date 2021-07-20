@@ -4,8 +4,8 @@
 
 - name: Validate PMM host
   assert:
-    that: pmm_host | length > 0
-    fail_msg: pmm_host is missing
+    that: pmm_server_host | length > 0
+    fail_msg: pmm_server_host is missing
 
 - name: Validate PMM user
   assert:

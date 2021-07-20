@@ -17,8 +17,8 @@ Ansible version: 2.9.
 
 These variables should be shared between this role and PMM Server role. Specify them at group or host level.
 
-- `pmm_host`: PMM hostname/IP.
-- `pmm_port`: PMM port. Default: '443'.
+- `pmm_server_host`: PMM hostname/IP.
+- `pmm_server_port`: PMM port. Default: '443'.
 - `pmm_user`: PMM user.
 - `pmm_password`: PMM password.
 
