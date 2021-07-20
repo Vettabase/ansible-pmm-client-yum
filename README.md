@@ -61,6 +61,42 @@ Validation (use these tags after making changes):
 - `pmm-client-validate`: Validate this role.
 
 
+## Stored Procedures
+
+This role adds some stored procedures, which are executed as `admin_mariadb_user`.
+
+The procedures are located in the `vettabase` database. The tests (only run when
+`stored_procedures_test=1`) are in `test_vettabase`.
+
+```
+format_name(name)
+    Return the name quoted with backticks. If the name contains backticks,
+    they are escaped. This is useful to include table names, column names,
+    etc, in SQL statements, when they could be reserved words or include
+    special characters.
+    Return NULL if name is NULL.
+
+format_account(user, host)
+    Return a string representing an account, with the specified username
+    and host properly quoted. Useful to include an account in SQL statements.
+    Return NULL if any parameter is NULL.
+
+account_exists(user, host)
+    Return whether the specified account exists.
+    Return NULL if any parameter is NULL.
+
+void create_pmm_user(user, host, password)
+    Create an account with all the permissions needed by PMM agent, and
+    the permission to execute this procedure.
+    If no password is specified, the account will use unix_socket for
+    authentication, which means that the user should exist in Linux
+    and can only login (without password) from the local system.
+    If a password is specified and the account already exists, the
+    password is changed.
+    Return NULL if user or host is NULL.
+```
+
+
 ## Copyright and License
 
 Copyright  2021  Vettabase Ltd
