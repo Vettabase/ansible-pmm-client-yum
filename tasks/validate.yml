@@ -14,8 +14,8 @@
 
 - name: Validate PMM password
   assert:
-    that: pmm_password | length > 0
-    fail_msg: pmm_password is missing
+    that: pmm_server_password | length > 0
+    fail_msg: pmm_server_password is missing
 
 - name: Validate pmm_client_monitoring_mode
   assert:

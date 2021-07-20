@@ -20,7 +20,7 @@ These variables should be shared between this role and PMM Server role. Specify 
 - `pmm_server_host`: PMM hostname/IP.
 - `pmm_server_port`: PMM port. Default: '443'.
 - `pmm_server_user`: PMM user.
-- `pmm_password`: PMM password.
+- `pmm__server_password`: PMM password.
 
 ### Role variables
 
