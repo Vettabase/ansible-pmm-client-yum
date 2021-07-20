@@ -111,12 +111,12 @@ BEGIN
     -- create executer if not exists, make sure the password is correct,
     -- and grant EXECUTE privilege on this procedure
     IF NOT (v_account_exists = TRUE) THEN
+        -- account doesn't exist, create it
         EXECUTE IMMEDIATE CONCAT(
             'CREATE USER IF NOT EXISTS ', v_executer_account, ' IDENTIFIED BY ', p_executer_password, ';'
         );
-    END IF;
-
-    IF p_executer_password IS NOT NULL THEN
+    ELSEIF p_executer_password IS NOT NULL THEN
+        -- account exists, new password specified: change password
         EXECUTE IMMEDIATE CONCAT(
             'SET PASSWORD FOR ', v_executer_account, ' = ', QUOTE(p_executer_password), ';'
         );
