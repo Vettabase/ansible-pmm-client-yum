@@ -86,32 +86,41 @@ BEGIN
     -- user@host
     DECLARE v_executer_account VARCHAR(64) DEFAULT
         format_account(p_executer_user, p_executer_host);
+    DECLARE v_account_exists DEFAULT
+        account_exists(p_executer_user, p_executer_host);
 
     -- Validate input:
-    -- specify p_executer_user, p_executer_host and p_executer_password
-    -- or none of them.
-    IF
-        NOT (p_executer_user IS NULL AND p_executer_host IS NULL AND p_executer_password IS NULL)
-        AND NOT (p_executer_user IS NOT NULL AND p_executer_host IS NOT NULL AND p_executer_password IS NOT NULL)
-    THEN
+    -- p_executer_user and p_executer_host are mandatory.
+    -- p_executer_password is optional if the account already exists
+    -- (so the current password is preserved).
+    IF p_executer_user IS NULL OR p_executer_host IS NULL THEN
         SIGNAL SQLSTATE '45000' SET
-              MESSAGE_TEXT = 'Invalid input: specify all parameters or set them all to NULL'
+              MESSAGE_TEXT = 'Invalid input: p_executer_user and p_executer_host cannot be NULL'
+            , MYSQL_ERRNO = 60000
+        ;
+    END IF;
+    -- TODO: This should actually be supported and we should create a UNIX_SOCKET user
+    IF p_executer_password IS NULL AND NOT (v_account_exists = TRUE) THEN
+        SIGNAL SQLSTATE '45000' SET
+              MESSAGE_TEXT = 'Invalid input: the specified account does not exist, so p_executer_password cannot be NULL'
             , MYSQL_ERRNO = 60000
         ;
     END IF;
 
+
     -- create executer if not exists, make sure the password is correct,
     -- and grant EXECUTE privilege on this procedure
-    IF NOT account_exists(p_executer_user, p_executer_host) THEN
+    IF NOT (v_account_exists = TRUE) THEN
         EXECUTE IMMEDIATE CONCAT(
             'CREATE USER IF NOT EXISTS ', v_executer_account, ' IDENTIFIED BY ', p_executer_password, ';'
         );
     END IF;
 
-    -- set password
-    EXECUTE IMMEDIATE CONCAT(
-        'SET PASSWORD FOR ', v_executer_account, ' = ', QUOTE(p_executer_password), ';'
-    );
+    IF p_executer_password IS NOT NULL THEN
+        EXECUTE IMMEDIATE CONCAT(
+            'SET PASSWORD FOR ', v_executer_account, ' = ', QUOTE(p_executer_password), ';'
+        );
+    END IF;
 
     -- grant permissions needed by PMM agent
     EXECUTE IMMEDIATE CONCAT(
