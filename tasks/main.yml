@@ -22,18 +22,18 @@
 - name: Create PMM setup stored procedures in MariaDB
   tags: [ pmm, pmm-client, monitor-scripts-upgrade ]
   shell: >
-    mysql <  -u"{{ mariadb_user }}" -p"{{ mariadb_password }}" "{{ monitoring_scripts_dir }}"/pmm_client_setup.sql
+    mysql <  -u"{{ admin_mariadb_user }}" -p"{{ admin_mariadb_password }}" "{{ monitoring_scripts_dir }}"/pmm_client_setup.sql
 
 - name: Test PMM setup stored procedures in MariaDB
   tags: [ pmm, pmm-client, monitor-scripts-upgrade ]
   shell: >
-    mysql <  -u"{{ mariadb_user }}" -p"{{ mariadb_password }}" "{{ monitoring_scripts_dir }}"/test_pmm_client_setup.sql
+    mysql <  -u"{{ admin_mariadb_user }}" -p"{{ admin_mariadb_password }}" "{{ monitoring_scripts_dir }}"/test_pmm_client_setup.sql
   when: stored_procedures_test == '1'
 
 - name: Call vettabase.create_pmm_user()
   tags: [ pmm, pmm-client, monitor-scripts-upgrade ]
   shell: >
-    "mysql -u{{ mariadb_user }} -p{{ mariadb_password }} -e 'CALL vettabase.create_pmm_user({{ pmm_client_username }}, {{ pmm_server_host }}, {{ pmm_client_password }})'"
+    "mysql -u{{ admin_mariadb_user }} -p{{ admin_mariadb_password }} -e 'CALL vettabase.create_pmm_user({{ pmm_mariadb_username }}, {{ pmm_server_host }}, {{ pmm_mariadb_password }})'"
 
 - name: Add Percona official RPM repository
   tags: [ pmm, pmm-client, percona-release-upgrade ]
@@ -57,7 +57,7 @@
 - name: Configure pmm2-client
   tags: [ pmm, pmm-client, pmm-client-configure, pmm-client-upgrade ]
   command: >
-    "pmm-admin config --server-url=https://{{ pmm_user | urlencode }}:{{ pmm_password | urlencode }}@{{ pmm_server_host | urlencode }}:{{ pmm_server_port }} --server-insecure-tls --force"
+    "pmm-admin config --server-url=https://{{ pmm_server_user | urlencode }}:{{ pmm_password | urlencode }}@{{ pmm_server_host | urlencode }}:{{ pmm_server_port }} --server-insecure-tls --force"
 
 - name: Remove MySQL service if present
   tags: [ pmm, pmm-client, pmm-client-configure ]
@@ -68,4 +68,4 @@
 - name: Add MySQL service without query analytics
   tags: [ pmm, pmm-client, pmm-client-configure, pmm-client-upgrade ]
   command: >
-    "pmm-admin add mysql --username={{ pmm_client_username }} --password={{ pmm_client_password }} --metrics-mode={{ pmm_client_monitoring_mode }} --query-source={{ pmm_client_query_source }} --environment={{ environment }} --cluster={{ cluster_name }} --replication-set={{ replication_set_name }}"
+    "pmm-admin add mysql --username={{ pmm_mariadb_username }} --password={{ pmm_mariadb_password }} --metrics-mode={{ pmm_client_monitoring_mode }} --query-source={{ pmm_client_query_source }} --environment={{ environment }} --cluster={{ cluster_name }} --replication-set={{ replication_set_name }}"

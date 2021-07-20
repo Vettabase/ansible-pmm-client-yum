@@ -9,8 +9,8 @@
 
 - name: Validate PMM user
   assert:
-    that: pmm_user | length > 0
-    fail_msg: pmm_user is missing
+    that: pmm_server_user | length > 0
+    fail_msg: pmm_server_user is missing
 
 - name: Validate PMM password
   assert:
