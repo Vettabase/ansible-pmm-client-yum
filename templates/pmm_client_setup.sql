@@ -99,22 +99,21 @@ BEGIN
             , MYSQL_ERRNO = 60000
         ;
     END IF;
-    -- TODO: This should actually be supported and we should create a UNIX_SOCKET user
-    IF p_executer_password IS NULL AND NOT (v_account_exists = TRUE) THEN
-        SIGNAL SQLSTATE '45000' SET
-              MESSAGE_TEXT = 'Invalid input: the specified account does not exist, so p_executer_password cannot be NULL'
-            , MYSQL_ERRNO = 60000
-        ;
-    END IF;
 
 
     -- create executer if not exists, make sure the password is correct,
     -- and grant EXECUTE privilege on this procedure
     IF NOT (v_account_exists = TRUE) THEN
         -- account doesn't exist, create it
-        EXECUTE IMMEDIATE CONCAT(
-            'CREATE USER IF NOT EXISTS ', v_executer_account, ' IDENTIFIED BY ', p_executer_password, ';'
-        );
+        IF p_executer_password IS NULL THEN
+            EXECUTE IMMEDIATE CONCAT(
+                'CREATE USER IF NOT EXISTS ', v_executer_account, ' IDENTIFIED VIA unix_socket;'
+            );
+        ELSE
+            EXECUTE IMMEDIATE CONCAT(
+                'CREATE USER IF NOT EXISTS ', v_executer_account, ' IDENTIFIED BY ', p_executer_password, ';'
+            );
+        END IF;
     ELSEIF p_executer_password IS NOT NULL THEN
         -- account exists, new password specified: change password
         EXECUTE IMMEDIATE CONCAT(
