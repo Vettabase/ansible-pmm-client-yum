@@ -3,6 +3,9 @@
 percona_release_version: 'latest'
 monitoring_scripts_dir: '/opt/monitor'
 
+pmm_server_user: pmm
+pmm_server_password: secret
+
 admin_mariadb_user: 'root'
 admin_mariadb_password: 'secret'
 
