@@ -100,17 +100,6 @@ BEGIN
         ;
     END IF;
 
-    -- create pmm user, grant permissions
-    CREATE USER 'pmm'@'localhost'
-        IDENTIFIED BY 'pass'
-        WITH MAX_USER_CONNECTIONS 10
-    ;
-    GRANT
-            SELECT, PROCESS, SUPER, REPLICATION CLIENT, RELOAD
-        ON *.*
-        TO 'pmm'@'localhost'
-    ;
-
     -- create executer if not exists, make sure the password is correct,
     -- and grant EXECUTE privilege on this procedure
     IF NOT account_exists(p_executer_user, p_executer_host) THEN
@@ -118,9 +107,27 @@ BEGIN
             'CREATE USER IF NOT EXISTS ', v_executer_account, ' IDENTIFIED BY ', p_executer_password, ';'
         );
     END IF;
+
+    -- set password
     EXECUTE IMMEDIATE CONCAT(
         'SET PASSWORD FOR ', v_executer_account, ' = ', QUOTE(p_executer_password), ';'
     );
+
+    -- grant permissions needed by PMM agent
+    EXECUTE IMMEDIATE CONCAT(
+        'CREATE USER ', v_executer_account,
+            ' WITH MAX_USER_CONNECTIONS 10',
+        ';'
+    );
+    EXECUTE IMMEDIATE CONCAT(
+        'GRANT ',
+                'SELECT, PROCESS, SUPER, REPLICATION CLIENT, RELOAD ',
+            'ON *.* ',
+            'TO ', v_executer_account,
+        ';'
+    );
+
+    -- permission to run this procedure
     EXECUTE IMMEDIATE CONCAT(
         'GRANT EXECUTE ON vettabase.* TO ', v_executer_account, ';'
     );
