@@ -1,7 +1,7 @@
 ---
 
 - name: Include validate.yml
-  tags: [ pmm, pmm-client, validate, pmm-client-validate ]
+  tags: [ pmm, pmm-client, validate, pmm-validate, pmm-client-validate ]
   include: validate.yml
 
 - name: Create directory for monitoring scripts

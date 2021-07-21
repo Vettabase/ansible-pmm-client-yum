@@ -58,6 +58,7 @@ Normal operations:
 Validation (use these tags after making changes):
 
 - `validate`: Validate this role and other roles that use this tag.
+- `pmm-validate`: Validate this role and other PMM Server and Client roles that support this role.
 - `pmm-client-validate`: Validate this role.
 
 
