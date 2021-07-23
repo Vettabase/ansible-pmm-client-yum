@@ -47,6 +47,7 @@ These variables are meant to be to set at group or host level, as each host or g
 ### Skip variables
 
 - `stored_procedures_test`: Run stored procedures tests. Use after making changes to the stored procedures, or upgrading MariaDB, or changing relevant parts of its configuration.
+- `skip_pmm_client_configure`: Skip configuration of the PMM Client after installing it. Useful if no change has to be made, because otherwise the mysql service would be stopped and restarted.
 
 
 ## Tags
