@@ -24,7 +24,7 @@
   tags: [ pmm, pmm-client, monitor-scripts-upgrade ]
   shell: >
     mysql <  -u"{{ admin_mariadb_user }}" -p"{{ admin_mariadb_password }}" "{{ monitoring_scripts_dir }}"/test_pmm_client_setup.sql
-  when: stored_procedures_test == '1'
+  when: skip_stored_procedures_test != '1'
 
 - name: Call vettabase.create_pmm_user()
   tags: [ pmm, pmm-client, monitor-scripts-upgrade ]
