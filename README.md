@@ -33,7 +33,6 @@ These variables have defaults in `defaults/main.yml`. Make sure to override defa
 - `pmm_mariadb_password`: MariaDB password for `pmm_mariadb_username`.
 - `pmm_client_query_source`: 'slowlog', 'perfschema', 'none'. Recommended: 'slowlog'. Default: 'none'.
 - `pmm_client_monitoring_mode`: 'push', 'pull', 'auto'. Default: 'push'.
-- `stored_procedures_test`: Run stored procedures tests. Use after making changes to the stored procedures, or upgrading MariaDB, or changing relevant parts of its configuration.
 
 
 ### Group or host level
@@ -44,6 +43,10 @@ These variables are meant to be to set at group or host level, as each host or g
 - `environment`: This helps categorise each node in the PMM interface.
 - `cluster_name`: This helps categorise each node in the PMM interface.
 - `replication_set_name`: This helps categorise each node in the PMM interface.
+
+### Skip variables
+
+- `stored_procedures_test`: Run stored procedures tests. Use after making changes to the stored procedures, or upgrading MariaDB, or changing relevant parts of its configuration.
 
 
 ## Tags
