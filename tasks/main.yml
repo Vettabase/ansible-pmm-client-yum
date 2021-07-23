@@ -12,18 +12,6 @@
   tags: [ pmm, pmm-client, percona-release-upgrade, pmm-client-upgrade ]
   include: validate.yml
 
-- name: Configure pmm2-client
+- name: Include configure.yml
   tags: [ pmm, pmm-client, pmm-client-configure, pmm-client-upgrade ]
-  command: >
-    "pmm-admin config --server-url=https://{{ pmm_server_user | urlencode }}:{{ pmm_server_password | urlencode }}@{{ pmm_server_host | urlencode }}:{{ pmm_server_port }} --server-insecure-tls --force"
-
-- name: Remove MySQL service if present
-  tags: [ pmm, pmm-client, pmm-client-configure ]
-  command: >
-    "pmm-admin remove mysql"
-  ignore_error: yes
-
-- name: Add MySQL service without query analytics
-  tags: [ pmm, pmm-client, pmm-client-configure, pmm-client-upgrade ]
-  command: >
-    "pmm-admin add mysql --username={{ pmm_mariadb_username }} --password={{ pmm_mariadb_password }} --metrics-mode={{ pmm_client_monitoring_mode }} --query-source={{ pmm_client_query_source }} --environment={{ environment }} --cluster={{ cluster_name }} --replication-set={{ replication_set_name }}"
+  include: validate.yml
