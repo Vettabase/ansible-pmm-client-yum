@@ -4,36 +4,9 @@
   tags: [ pmm, pmm-client, validate, pmm-validate, pmm-client-validate ]
   include: validate.yml
 
-- name: Create directory for monitoring scripts
+- name: Include procedures.yml
   tags: [ pmm, pmm-client, monitor-scripts-upgrade ]
-  file:
-    path: "{{ monitoring_scripts_dir }}"
-    mode: '0775'
-    state: directory
-
-- name: Add PMM stored procedures SQL files
-  tags: [ pmm, pmm-client, monitor-scripts-upgrade ]
-  template:
-    src: ./templates/*
-    dest:  "{{ monitoring_scripts_dir }}"
-    mode: '0775'
-    state: present
-
-- name: Create PMM setup stored procedures in MariaDB
-  tags: [ pmm, pmm-client, monitor-scripts-upgrade ]
-  shell: >
-    mysql <  -u"{{ admin_mariadb_user }}" -p"{{ admin_mariadb_password }}" "{{ monitoring_scripts_dir }}"/pmm_client_setup.sql
-
-- name: Test PMM setup stored procedures in MariaDB
-  tags: [ pmm, pmm-client, monitor-scripts-upgrade ]
-  shell: >
-    mysql <  -u"{{ admin_mariadb_user }}" -p"{{ admin_mariadb_password }}" "{{ monitoring_scripts_dir }}"/test_pmm_client_setup.sql
-  when: stored_procedures_test == '1'
-
-- name: Call vettabase.create_pmm_user()
-  tags: [ pmm, pmm-client, monitor-scripts-upgrade ]
-  shell: >
-    "mysql -u{{ admin_mariadb_user }} -p{{ admin_mariadb_password }} -e 'CALL vettabase.create_pmm_user({{ pmm_mariadb_username }}, {{ pmm_server_host }}, {{ pmm_mariadb_username }}, {{ pmm_mariadb_password }})'"
+  include: validate.yml
 
 - name: Add Percona official RPM repository
   tags: [ pmm, pmm-client, percona-release-upgrade ]
