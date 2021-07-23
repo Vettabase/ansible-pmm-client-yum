@@ -16,4 +16,6 @@ pmm_mariadb_password: 'secret'
 pmm_client_query_source: 'none'
 pmm_client_monitoring_mode: 'push'
 
+# variables to skip tasks
 stored_procedures_test: 0
+skip_pmm_client_configure: 0

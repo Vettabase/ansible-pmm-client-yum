@@ -3,6 +3,7 @@
 - name: Include validate.yml
   tags: [ pmm, pmm-client, validate, pmm-validate, pmm-client-validate ]
   include: validate.yml
+  when: 
 
 - name: Include procedures.yml
   tags: [ pmm, pmm-client, monitor-scripts-upgrade ]
@@ -12,6 +13,7 @@
   tags: [ pmm, pmm-client, percona-release-upgrade, pmm-client-upgrade ]
   include: validate.yml
 
-- name: Include configure.yml
+- name: Include configure.yml, unless skip_pmm_client_configure=1
   tags: [ pmm, pmm-client, pmm-client-configure, pmm-client-upgrade ]
   include: validate.yml
+  when: skip_pmm_client_configure != '1'
