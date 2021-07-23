@@ -3,21 +3,25 @@
 # Validate variables needed by this role
 
 - name: Validate PMM host
+  tags: [ pmm, pmm-client, validate, pmm-validate, pmm-client-validate ]
   assert:
     that: pmm_server_host | length > 0
     fail_msg: pmm_server_host is missing
 
 - name: Validate PMM user
+  tags: [ pmm, pmm-client, validate, pmm-validate, pmm-client-validate ]
   assert:
     that: pmm_server_user | length > 0
     fail_msg: pmm_server_user is missing
 
 - name: Validate PMM password
+  tags: [ pmm, pmm-client, validate, pmm-validate, pmm-client-validate ]
   assert:
     that: pmm_server_password | length > 0
     fail_msg: pmm_server_password is missing
 
 - name: Validate pmm_client_monitoring_mode
+  tags: [ pmm, pmm-client, validate, pmm-validate, pmm-client-validate ]
   assert:
     that: >
       pmm_client_monitoring_mode == 'push' or
@@ -26,6 +30,7 @@
     fail_msg: pmm_client_monitoring_mode is missing
 
 - name: Validate pmm_client_query_source
+  tags: [ pmm, pmm-client, validate, pmm-validate, pmm-client-validate ]
   assert:
     that: >
       pmm_client_query_source == 'none'       or
