@@ -2,6 +2,18 @@
 
 # Validate variables needed by this role
 
+- name: Validate MariaDB admin password
+  tags: [ pmm, pmm-client, validate, pmm-validate, pmm-client-validate ]
+  assert:
+    that: admin_mariadb_password | length > 0
+    fail_msg: admin_mariadb_password is missing
+
+- name: Validate MariaDB password for PMM Client
+  tags: [ pmm, pmm-client, validate, pmm-validate, pmm-client-validate ]
+  assert:
+    that: pmm_mariadb_password | length > 0
+    fail_msg: pmm_mariadb_password is missing
+
 - name: Validate PMM host
   tags: [ pmm, pmm-client, validate, pmm-validate, pmm-client-validate ]
   assert:
