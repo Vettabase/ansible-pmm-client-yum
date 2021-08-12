@@ -1,6 +1,8 @@
 ---
 
+# try to only do this for relevant tags
 - name: Include secrets
+  tags: [ pmm, pmm-client, validate, pmm-validate, pmm-client-validate, monitor-scripts-upgrade, pmm-client-configure, pmm-client-upgrade ]
   include_vars:
     dir: ../inc/
     file: .secrets.yml
