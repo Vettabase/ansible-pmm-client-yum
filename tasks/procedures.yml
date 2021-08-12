@@ -7,7 +7,7 @@
     mode: '0775'
     state: directory
 
-- name: Add PMM stored procedures SQL files
+- name: Upload PMM stored procedures SQL files
   tags: [ pmm, pmm-client, monitor-scripts-upgrade ]
   template:
     src: ./templates/*
@@ -15,12 +15,12 @@
     mode: '0775'
     state: present
 
-- name: Create PMM setup stored procedures in MariaDB
+- name: Create MariaDB stored procedures to setup PMM
   tags: [ pmm, pmm-client, monitor-scripts-upgrade ]
   shell: >
     mysql <  -u"{{ admin_mariadb_user }}" -p"{{ admin_mariadb_password }}" "{{ monitoring_scripts_dir }}"/pmm_client_setup.sql
 
-- name: Test PMM setup stored procedures in MariaDB
+- name: Test MariaDB stored procedures
   tags: [ pmm, pmm-client, monitor-scripts-upgrade ]
   shell: >
     mysql <  -u"{{ admin_mariadb_user }}" -p"{{ admin_mariadb_password }}" "{{ monitoring_scripts_dir }}"/test_pmm_client_setup.sql
