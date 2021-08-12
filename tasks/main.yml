@@ -1,5 +1,10 @@
 ---
 
+- name: Include secrets
+  include_vars:
+    dir: ../inc/
+    file: .secrets.yml
+
 - name: Include validate.yml
   tags: [ pmm, pmm-client, validate, pmm-validate, pmm-client-validate ]
   include: validate.yml
