@@ -103,6 +103,21 @@ void create_pmm_user(user, host, password)
 ```
 
 
+## Examples
+
+Validating changes to all PMM clients configuration:
+
+```
+ansible-playbook --check -t pmm-client-validate -l pmm_client -i mariadb mariadb.yml
+```
+
+Deploying PMM clients on a host group called `mariadb_development`:
+
+```
+ansible-playbook -t pmm-client -l mariadb_development -i mariadb mariadb.yml
+```
+
+
 ## Copyright and License
 
 Copyright  2021  Vettabase Ltd
