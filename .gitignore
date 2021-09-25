@@ -1,2 +1,4 @@
+# used for some quick & dirty tests that shouldn't be public
+pmm-*
 # ignore .secrets file, wherever it is
 **/.secrets
