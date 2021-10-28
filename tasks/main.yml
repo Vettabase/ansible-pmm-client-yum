@@ -14,13 +14,13 @@
 
 - name: Include procedures.yml
   tags: [ pmm, pmm-client, monitor-scripts-upgrade ]
-  include: validate.yml
+  include: procedures.yml
 
 - name: Include install.yml
   tags: [ pmm, pmm-client, percona-release-upgrade, pmm-client-upgrade ]
-  include: validate.yml
+  include: install.yml
 
 - name: Include configure.yml, unless skip_pmm_client_configure=1
   tags: [ pmm, pmm-client, pmm-client-configure, pmm-client-upgrade ]
-  include: validate.yml
+  include: configure.yml
   when: skip_pmm_client_configure != '1'
