@@ -113,13 +113,13 @@ BEGIN
         ELSE
             EXECUTE IMMEDIATE CONCAT(
                 'CREATE USER IF NOT EXISTS ', v_executer_account,
-                    ' IDENTIFIED BY PASSWORD(', QUOTE(p_executer_password), ');'
+                    ' IDENTIFIED BY ', QUOTE(p_executer_password), ';'
             );
         END IF;
     ELSEIF p_executer_password IS NOT NULL THEN
         -- account exists, new password specified: change password
         EXECUTE IMMEDIATE CONCAT(
-            'SET PASSWORD FOR ', v_executer_account, ' = PASSWORD(', QUOTE(p_executer_password), ');'
+            'SET PASSWORD FOR ', v_executer_account, ' = ', QUOTE(p_executer_password), ';'
         );
     END IF;
 
