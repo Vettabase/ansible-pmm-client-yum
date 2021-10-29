@@ -102,8 +102,8 @@ BEGIN
     END IF;
 
 
-    -- create executer if not exists, make sure the password is correct,
-    -- and grant EXECUTE privilege on this procedure
+    -- If executer doesn't exist, create it and (set password OR use unix_socket).
+    -- If it exists, set the password.
     IF NOT (v_account_exists = TRUE) THEN
         -- account doesn't exist, create it
         IF p_executer_password IS NULL THEN
@@ -112,19 +112,23 @@ BEGIN
             );
         ELSE
             EXECUTE IMMEDIATE CONCAT(
-                'CREATE USER IF NOT EXISTS ', v_executer_account, ' IDENTIFIED BY ', p_executer_password, ';'
+                'CREATE USER IF NOT EXISTS ', v_executer_account,
+                    ' IDENTIFIED BY PASSWORD(', QUOTE(p_executer_password), ');'
             );
         END IF;
     ELSEIF p_executer_password IS NOT NULL THEN
         -- account exists, new password specified: change password
         EXECUTE IMMEDIATE CONCAT(
-            'SET PASSWORD FOR ', v_executer_account, ' = ', QUOTE(p_executer_password), ';'
+            'SET PASSWORD FOR ', v_executer_account, ' = PASSWORD(', QUOTE(p_executer_password), ');'
         );
     END IF;
 
-    -- grant permissions needed by PMM agent
+    -- now that the user surely exists:
+    --   * make sure it has resource limits
+    --   * make sure it has permissions required by PMM Client
+    --   * make sure it can run this procedure
     EXECUTE IMMEDIATE CONCAT(
-        'CREATE USER ', v_executer_account,
+        'ALTER USER ', v_executer_account,
             ' WITH MAX_USER_CONNECTIONS 10',
         ';'
     );
