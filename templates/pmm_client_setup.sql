@@ -72,7 +72,8 @@ BEGIN
     RETURN EXISTS (SELECT user FROM mysql.user WHERE user = p_user AND host = p_host);
 END;
 
-
+# Example:
+# CALL create_pmm_user('pmm-client', '127.0.0.1', 'OIHFDIOWQ');
 CREATE OR REPLACE PROCEDURE create_pmm_user(
             IN p_executer_user VARCHAR(64),
             IN p_executer_host VARCHAR(64),
